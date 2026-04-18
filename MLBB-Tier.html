@@ -95,7 +95,7 @@
 
 
 
-    <script src="MLBB Hero.js"></script>
+    <script src="MLBB-Hero.js"></script>
     <script>
         const colorPaletteRows = [['#d1d1d1', '#00ffcc', '#00e5ff', '#b4a2ff', '#ff96ad', '#ffff00'], ['#666666', '#33ff00', '#007bff', '#6f42c1', '#ff2d55', '#ff9f43']];
         function parseHeroData(str) { return str.trim().split('\n').filter(line => line.trim() !== '').map(line => { const parts = line.split('\t').map(p => p.trim()); const roles = parts.slice(2).join(' ').split(',').map(r => r.trim().replace('---', '')).filter(r => r !== ''); return { name: parts[0], img: parts[1], roles: roles }; }); }
