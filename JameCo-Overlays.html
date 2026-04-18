@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Overlay by PZ Dev</title>
+    <link rel="icon" href="https://i.postimg.cc/26bZQ523/JC-icon2.png">
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: transparent;
+            /*background-color: #000; */
+        }
+
+        .banner {
+            position: fixed;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .top { top: 0; }
+        .bottom { bottom: 0; }
+
+        img {
+            width: 100%;
+            display: block;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+
+        .trophy-icon {
+            position: fixed;
+            top: 0.8vw;
+            right: 2.6vw;
+            width: 3.2vw;
+            z-index: 30;
+            pointer-events: none;
+        }
+
+        .status-wrapper {
+            position: fixed;
+            top: 1.0vw; 
+            left: 2.6vw;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 4vw;
+            font-family: 'Silkscreen', cursive;
+            font-weight: 500;
+            color: #ffffff;
+            pointer-events: none;
+        }
+
+        .center-status {
+            position: fixed;
+            top: 1.0vw;
+            left: 50.8%;
+            transform: translateX(-50%);
+            z-index: 20;
+            font-family: 'Silkscreen', cursive;
+            font-size: 0.8vw;
+            color: #ffffff;
+            text-transform: uppercase;
+            white-space: nowrap;
+            pointer-events: none;
+            display: flex;
+            gap: 9.8vw;
+        }
+
+        .JameCo-Frame {
+            position: fixed;
+            top: 0.6vw;
+            right: 2.9vw; 
+            width: 15vw; 
+            display: flex;
+            justify-content: center;
+            z-index: 20;
+            font-family: 'Silkscreen', cursive;
+            font-size: 1.5vw;
+            font-weight: 400;
+            color: #ffffff;
+            text-transform: uppercase;
+            pointer-events: none;
+            animation: expandFromCenter 8s ease-in-out infinite;
+        }
+
+        .JameCo-Frame2 {
+            position: fixed;
+            bottom: 0.2vw;
+            left: 1.6vw; 
+            width: 15vw; 
+            display: flex;
+            justify-content: center;
+            z-index: 20;
+            font-family: 'Silkscreen', cursive;
+            font-size: 1.2vw;
+            font-weight: 400;
+            color: #ffffff;
+            pointer-events: none;
+            animation: expandFromCenter 8s ease-in-out infinite;
+        }
+
+        .social-overlay {
+            position: fixed;
+            top: 0.48vw;
+            left: 72vw; 
+            display: flex;
+            align-items: center;
+            gap: 0.8vw; 
+            z-index: 25;
+            font-family: 'Silkscreen', cursive;
+            color: #ffffff;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            width: fit-content;
+        }
+
+        .social-icon {
+            top: 0.52vw;
+            width: 1.6vw;
+            height: 1.6vw;
+            object-fit: cover; 
+            flex-shrink: 0; 
+            border-radius: 50%;
+        }
+
+        #soc-text {
+            transition: font-size 0.3s ease;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .time-value {
+            display: inline-block;
+            width: 6.5vw;
+            text-align: left;
+            margin-left: 0.5vw;
+        }
+
+        .date-value {
+            margin-left: 0.5vw;
+        }
+
+        .dot {
+            width: 1vw;
+            height: 1vw;
+            border-radius: 50%;
+            margin-right: 0.7vw;
+            margin-top: 0.1vw;
+        }
+
+        .dot-red {
+            background-color: #ff0000;
+            box-shadow: 0 0 0.8vw #ff0000;
+            animation: blink 0.7s infinite;
+        }
+
+        .dot-blue {
+            width: 0.8vw;
+            height: 0.8vw;
+            margin-top: 0vw;
+            background-color: #00e5ff;
+            box-shadow: 0 0 0.8vw #00e5ff;
+            animation: blink 2s infinite;
+        }
+
+        .Sponsor-Frame {
+            position: fixed;
+            bottom: 1.6vw;
+            right: 0.5vw;
+            width: 20vw; 
+            display: flex;
+            justify-content: center;
+            z-index: 20;
+            font-family: 'Silkscreen', cursive;
+            font-size: 1.2vw;
+            font-weight: 400;
+            color: #ffffff5a;
+            pointer-events: none;
+            animation: expandFromCenter 20s ease-in-out infinite;
+        }
+
+        .center-icon {
+            position: fixed;
+            top: 1.65vw; 
+            left: 50%; 
+            transform: translateX(-50%) translateY(-50%);
+            width: 4vw; 
+            z-index: 40; 
+            pointer-events: none;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes expandFromCenter {
+            0%, 100% { letter-spacing: 0; text-indent: 0; }
+            50% { letter-spacing: 0.2vw; text-indent: 0.2vw; }
+        }
+
+        .text-live { font-size: 1.2vw; text-transform: uppercase; line-height: 1; }
+        .text-Status { font-size: 0.9vw; text-transform: uppercase; line-height: 1; }
+    </style>
+</head>
+<body>
+
+    <img src="https://i.postimg.cc/wTq1BSqv/trophy.png" alt="Trophy" class="trophy-icon">
+
+    <div class="banner top">
+        <img src="https://i.postimg.cc/Kj9sBdCr/Topp.png" alt="Top">
+    </div>
+
+    <img src="https://i.postimg.cc/26bZQ523/JC-icon2.png" alt="Center Icon" class="center-icon">
+
+    <div class="social-overlay" id="social-box">
+        <img src="https://i.postimg.cc/yYbx1jLN/fb.png" class="social-icon" id="soc-img">
+        <span id="soc-text" style="font-size: 1.00vw;">มหาเทพเจมส์โค</span>
+    </div>
+
+    <div class="status-wrapper">
+        <div class="status-item">
+            <div class="dot dot-red"></div>
+            <div class="text-live">Live Stream</div>
+        </div>
+        <div class="status-item">
+            <div class="dot dot-blue"></div>
+            <div class="text-Status">Stream Donate : ON</div>
+        </div>
+    </div>
+
+    <div class="JameCo-Frame">JameCo</div>
+
+    <div class="center-status">
+        <div class="status-item">
+            <span>Stream Date :</span>
+            <span id="date-val" class="date-value">--/--/----</span>
+        </div>
+        <div class="status-item">
+            <span>Stream Time :</span>
+            <span id="time-val" class="time-value">00:00:00</span>
+        </div>
+    </div>
+
+    <div class="banner bottom">
+        <img src="https://i.postimg.cc/28hbLcCJ/Buttom.png" alt="Bottom">
+    </div>
+
+    <div class="JameCo-Frame2">JameCo</div>
+
+    <div class="Sponsor-Frame">Open for Sponsor</div>
+
+    <script>
+        const socialList = [
+            { img: "https://i.postimg.cc/yYbx1jLN/fb.png", name: "มหาเทพเจมส์โค" ,size: "1.00vw"},
+            { img: "https://i.postimg.cc/RVDhSdgN/ig.png", name: "jame_jameco"  ,size: "0.85vw"},
+            { img: "https://i.postimg.cc/L6b59Dxh/tt.png", name: "มหาเทพเจมส์โค" ,size: "1.00vw"},
+            { img: "https://i.postimg.cc/4NSyfPWd/yt.png", name: "มหาเทพเจมส์โค" ,size: "1.00vw"}
+        ];
+
+        let currentIndex = 0;
+
+        function updateDateTime() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            document.getElementById('date-val').innerText = `${day}/${month}/${year}`;
+            document.getElementById('time-val').innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        function rotateSocial() {
+            const box = document.getElementById('social-box');
+            const img = document.getElementById('soc-img');
+            const txt = document.getElementById('soc-text');
+
+            box.style.opacity = 0;
+
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % socialList.length;
+                const currentData = socialList[currentIndex];
+                
+                img.src = currentData.img;
+                txt.innerText = currentData.name;
+                
+                txt.style.fontSize = currentData.size;
+
+                box.style.opacity = 1;
+            }, 500);
+        }
+
+        setInterval(updateDateTime, 1000);
+        setInterval(rotateSocial, 8000);
+        
+        updateDateTime();
+    </script>
+
+</body>
+</html>
